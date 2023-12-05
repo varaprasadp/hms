@@ -1,0 +1,14 @@
+schema {
+	query: Query
+}
+
+type Query {
+	doctors: [Doctor]
+	doctor(id: String): Doctor
+}
+
+type Doctor {
+	id: String
+	firstName: String
+	lastName: String
+}
