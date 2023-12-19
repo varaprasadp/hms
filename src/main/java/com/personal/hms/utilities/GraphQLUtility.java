@@ -3,12 +3,13 @@ package com.personal.hms.utilities;
 import java.io.File;
 import java.io.IOException;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
+import com.personal.hms.dataFetchers.ConsultationsDataFetcher;
 import com.personal.hms.dataFetchers.DoctorDataFetcher;
+import com.personal.hms.dataFetchers.DoctorsDataFetcher;
 
 import graphql.GraphQL;
 import graphql.schema.GraphQLSchema;
@@ -22,12 +23,14 @@ import jakarta.annotation.PostConstruct;
 public class GraphQLUtility {
 	@Value("classpath:graphql/schemas.graphqls")
 	private Resource schemaResource;
-	private GraphQL graphQL;
 	private DoctorDataFetcher doctorDataFetcher;
+	private DoctorsDataFetcher doctorsDataFetcher;
+	private ConsultationsDataFetcher consultationsDataFetcher;
 	
-	@Autowired
-	GraphQLUtility(DoctorDataFetcher ddf) throws IOException {
+	GraphQLUtility(DoctorDataFetcher ddf, DoctorsDataFetcher dsdf, ConsultationsDataFetcher csdf) throws IOException {
 		doctorDataFetcher = ddf;
+		doctorsDataFetcher = dsdf;
+		consultationsDataFetcher = csdf;
 	}
 	
 	@PostConstruct
@@ -42,6 +45,8 @@ public class GraphQLUtility {
 	public RuntimeWiring buildRuntimeWiring() {
 		return RuntimeWiring.newRuntimeWiring()
 				.type("Query", typeWiring -> typeWiring
-						.dataFetcher("doctor", doctorDataFetcher)).build();
+						.dataFetcher("doctor", doctorDataFetcher).dataFetcher("doctors", doctorsDataFetcher))
+				.type("Doctor", typeWiring -> typeWiring
+						.dataFetcher("consultations", consultationsDataFetcher)).build();
 	}
 }

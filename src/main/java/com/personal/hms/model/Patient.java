@@ -9,7 +9,7 @@ import lombok.Data;
 @Document("patient")
 public class Patient {
 	@Id
-	private String id;
+	private String ID;
 	private String firstName;
 	private String lastName;
 	private String DOB;

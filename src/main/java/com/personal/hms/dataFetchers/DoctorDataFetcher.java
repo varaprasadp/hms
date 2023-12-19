@@ -3,7 +3,6 @@ package com.personal.hms.dataFetchers;
 import java.util.Map;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.personal.hms.model.Doctor;
@@ -17,7 +16,6 @@ public class DoctorDataFetcher implements DataFetcher<Doctor>{
 	
 	private final DoctorRepository dr;
 	
-	@Autowired
 	DoctorDataFetcher(DoctorRepository dr) {
 		this.dr = dr;
 	}
@@ -29,3 +27,4 @@ public class DoctorDataFetcher implements DataFetcher<Doctor>{
         return user.get();
 	}
 }
+

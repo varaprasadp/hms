@@ -1,5 +1,5 @@
 schema {
-	query: Query
+	query: Query,
 }
 
 type Query {
@@ -11,4 +11,15 @@ type Doctor {
 	id: String
 	firstName: String
 	lastName: String
+	specialization: String
+	experience: Int
+	consultations: [Consultation]
+}
+
+type Consultation {
+	id: String
+	patientID: String
+	doctorID: String
+	medicine: String
+	diagnosis: String
 }
